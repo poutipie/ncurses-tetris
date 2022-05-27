@@ -12,7 +12,10 @@ void TetrisBlock_init(TETRIS_BLOCK** self, TetrisBlockType block_type, int x, in
     {
         case TETRISBLOCKTYPE_SQUARE:
             TetrisBlock_init_Square(*self, x, y);
-        
+            break;
+        case TETRISBLOCKTYPE_S:
+            TetrisBlock_init_S(*self, x, y);
+            break;
         default:
             break;
     }
@@ -44,6 +47,29 @@ void TetrisBlock_init_Square(TETRIS_BLOCK* self, int x, int y) {
 
 }
 
+void TetrisBlock_init_S(TETRIS_BLOCK* self, int x, int y) {
+    self->m_color_scheme = COLORSCHEME_GREEN;
+    self->size = 4;
+    self->x_coords = (int*)malloc(self->size * sizeof(int));
+    self->y_coords = (int*)malloc(self->size * sizeof(int));
+
+    /* Top left corner */
+    self->x_coords[0] = x + 1;
+    self->y_coords[0] = y;
+
+    /* Top right corner */
+    self->x_coords[1] = x + 2;
+    self->y_coords[1] = y;
+
+    /* Bottom left corner */
+    self->x_coords[2] = x;
+    self->y_coords[2] = y + 1;
+
+    /* Bottom right corner */
+    self->x_coords[3] = x + 1;
+    self->y_coords[3] = y + 1;
+}
+
 void TetrisBlock_destroy(TETRIS_BLOCK* self) {
     free(self->x_coords);
     free(self->y_coords);
@@ -54,8 +80,8 @@ void TetrisBlock_move(TETRIS_BLOCK* self, WINDOW* h_win, int x, int y) {
 
     bool movement_allowed = true;
     for (int i = 0; i < self->size; ++i) {
-        movement_allowed &= x_within_bounds(h_win, self->x_coords[i]);
-        movement_allowed &= y_within_bounds(h_win, self->y_coords[i]);
+        movement_allowed &= x_within_bounds(h_win, self->x_coords[i] + x);
+        movement_allowed &= y_within_bounds(h_win, self->y_coords[i] + y);
     }
     if (movement_allowed == false) {
         return;

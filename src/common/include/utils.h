@@ -10,6 +10,7 @@ typedef enum ColorScheme {
 	COLORSCHEME_BLACK  = 1,
 	COLORSCHEME_WHITE  = 2,
     COLORSCHEME_YELLOW = 3,
+    COLORSCHEME_GREEN = 4
 } ColorScheme;
 
 

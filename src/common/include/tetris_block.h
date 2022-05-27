@@ -20,6 +20,7 @@ typedef struct TetrisBlock {
 
 void TetrisBlock_init(TETRIS_BLOCK** self, TetrisBlockType block_type, int x, int y);
 void TetrisBlock_init_Square(TETRIS_BLOCK* self, int x, int y);
+void TetrisBlock_init_S(TETRIS_BLOCK* self, int x, int y);
 
 void TetrisBlock_destroy(TETRIS_BLOCK* self);
 

@@ -31,7 +31,7 @@ int main(int argc, char *argv[])
 	wtimeout(stdscr, 500); /* Make sure getch does not block execution */
 	curs_set(0); /* Hide ncurses cursos */
 
-	TetrisBlock_init(&my_rect, TETRISBLOCKTYPE_SQUARE, 4, 4);
+	TetrisBlock_init(&my_rect, TETRISBLOCKTYPE_S, 4, 4);
 
 	height = 50;
 	width = 40;

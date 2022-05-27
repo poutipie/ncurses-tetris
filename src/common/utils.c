@@ -4,6 +4,7 @@ void ncurses_initialize_color_schemes() {
 	init_pair(COLORSCHEME_BLACK, COLOR_WHITE, COLOR_BLACK);
 	init_pair(COLORSCHEME_WHITE, COLOR_BLACK, COLOR_WHITE);
 	init_pair(COLORSCHEME_YELLOW, COLOR_WHITE, COLOR_YELLOW);
+	init_pair(COLORSCHEME_GREEN, COLOR_WHITE, COLOR_GREEN);
 }
 
 bool y_within_bounds(WINDOW* h_win, int y) {
