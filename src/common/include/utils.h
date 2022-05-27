@@ -2,15 +2,22 @@
 #define UTILS_H
 
 #include <ncurses.h>
+#include <stdbool.h>
 
-bool y_within_bounds(WINDOW* h_win, int y) {
-	int max_y = getmaxy(h_win) - 2;
-	return  ! (y < 1 || y > max_y);
-}
+typedef uint32_t COLOR_T;
 
-bool x_within_bounds(WINDOW* h_win, int x) {
-	int max_x = getmaxx(h_win) - 2;
-	return ! ( x < 1 || x > max_x);
-}
+typedef enum ColorScheme {
+	COLORSCHEME_BLACK  = 1,
+	COLORSCHEME_WHITE  = 2,
+    COLORSCHEME_YELLOW = 3,
+} ColorScheme;
+
+
+void ncurses_initialize_color_schemes();
+void set_window_colors_scheme(WINDOW* h_win, ColorScheme color_scheme) ;
+
+bool y_within_bounds(WINDOW* h_win, int y);
+bool x_within_bounds(WINDOW* h_win, int x);
+void set_default_colors();
 
 #endif /* UTILS_H */

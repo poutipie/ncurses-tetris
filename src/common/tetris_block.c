@@ -1,35 +1,45 @@
 #include "tetris_block.h"
-#include "utils.h"
 #include "stdlib.h"
 
 void TetrisBlock_init(TETRIS_BLOCK** self, TetrisBlockType block_type, int x, int y) {
-    if (block_type == TETRISBLOCKTYPE_SQUARE) {
-        TetrisBlock_init_Square(self, x, y);
+
+    *self = (TETRIS_BLOCK*)malloc(sizeof(TETRIS_BLOCK));
+
+    (*self)->m_type = block_type;
+    (*self)->falling = false;
+
+    switch (block_type)
+    {
+        case TETRISBLOCKTYPE_SQUARE:
+            TetrisBlock_init_Square(*self, x, y);
+        
+        default:
+            break;
     }
 }
 
-void TetrisBlock_init_Square(TETRIS_BLOCK** self, int x, int y) {
-    *self = (TETRIS_BLOCK*)malloc(sizeof(TETRIS_BLOCK));
+void TetrisBlock_init_Square(TETRIS_BLOCK* self, int x, int y) {
 
-    (*self)->size = 4;
-    (*self)->x_coords = (int*)malloc((*self)->size * sizeof(int));
-    (*self)->y_coords = (int*)malloc((*self)->size * sizeof(int));
+    self->m_color_scheme = COLORSCHEME_YELLOW;
+    self->size = 4;
+    self->x_coords = (int*)malloc(self->size * sizeof(int));
+    self->y_coords = (int*)malloc(self->size * sizeof(int));
     
     /* Top left corner */
-    (*self)->x_coords[0] = x;
-    (*self)->y_coords[0] = y;
+    self->x_coords[0] = x;
+    self->y_coords[0] = y;
     
     /* Top right corner */
-    (*self)->x_coords[1] = x+1;
-    (*self)->y_coords[1] = y;
+    self->x_coords[1] = x+1;
+    self->y_coords[1] = y;
 
     /* Bottom left corner */
-    (*self)->x_coords[2] = x;
-    (*self)->y_coords[2] = y + 1;
+    self->x_coords[2] = x;
+    self->y_coords[2] = y + 1;
 
     /* Bottom right corner */
-    (*self)->x_coords[3] = x + 1;
-    (*self)->y_coords[3] = y + 1;
+    self->x_coords[3] = x + 1;
+    self->y_coords[3] = y + 1;
     
 
 }
@@ -60,10 +70,13 @@ void TetrisBlock_move(TETRIS_BLOCK* self, WINDOW* h_win, int x, int y) {
 }
 
 void TetrisBlock_draw(TETRIS_BLOCK* self, WINDOW* h_win) {
+
+    wattron(h_win, COLOR_PAIR(self->m_color_scheme));
     for(int i = 0; i < self->size; ++i) {
         wmove(h_win, self->y_coords[i], self->x_coords[i]);
         wprintw(h_win, "*");
     }
+    wattroff(h_win, COLOR_PAIR(self->m_color_scheme));
 }
 void TetrisBlock_clear(TETRIS_BLOCK* self, WINDOW* h_win) {
     for(int i = 0; i < self->size; ++i) {
