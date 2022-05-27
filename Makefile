@@ -5,7 +5,6 @@ LDFLAGS = -lncurses
 BUILD_DIR := ./build
 SRC_DIRS := ./src
 
-# Thanks to Job Vranish (https://spin.atomicobject.com/2016/08/26/makefile-c-projects/)
 TARGET_EXEC := tetris
 
 # Find all the C and C++ files we want to compile
