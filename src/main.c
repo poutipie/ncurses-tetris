@@ -57,6 +57,8 @@ int main(int argc, char *argv[])
 			case KEY_RIGHT:
 				TetrisBlock_move(my_rect, tetris_win, 1, 0);
 				break;
+			case KEY_UP:
+				TetrisBlock_rotate(my_rect, tetris_win);
 			default:
 				TetrisBlock_move(my_rect, tetris_win, 0, 0);
 				break;
@@ -70,7 +72,8 @@ int main(int argc, char *argv[])
 }
 
 WINDOW *create_newwin(int height, int width, int starty, int startx)
-{	WINDOW *local_win;
+{	
+	WINDOW *local_win;
 
 	local_win = newwin(height, width, starty, startx);
 	box(local_win, 0 , 0);		/* 0, 0 gives default characters 
