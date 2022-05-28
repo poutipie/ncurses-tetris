@@ -13,7 +13,7 @@ int main(int argc, char *argv[])
 {	
 	WINDOW* tetris_win;
 	GameState* game_state;
-	TETRIS_BLOCK* curr_block;
+	TetrisBlock* curr_block;
 	int startx, starty, width, height;
 
 	initscr();			/* Start curses mode 		*/
@@ -55,23 +55,19 @@ int main(int argc, char *argv[])
 		ch = wgetch(stdscr);
 		switch(ch) {
 			case KEY_LEFT:
-				TetrisBlock_move(curr_block, tetris_win, -1, 0);
+				TetrisBlock_move(curr_block, tetris_win, game_state, -1, 0);
 				break;
 			case KEY_RIGHT:
-				TetrisBlock_move(curr_block, tetris_win, 1, 0);
+				TetrisBlock_move(curr_block, tetris_win, game_state, 1, 0);
 				break;
 			case KEY_UP:
-				TetrisBlock_rotate(curr_block, tetris_win);
+				TetrisBlock_rotate(curr_block, tetris_win, game_state);
 			default:
-				TetrisBlock_move(curr_block, tetris_win, 0, 0);
+				TetrisBlock_move(curr_block, tetris_win, game_state, 0, 0);
 				break;
 		}
-		TetrisBlock_move(curr_block, tetris_win, 0, 1);
 		
-		if (TetrisBlock_is_on_the_floor(curr_block, tetris_win)) {
-			GameState_fill_points(game_state, curr_block->m_blk_coords, 
-				curr_block->m_blk_size
-			);
+		if (!TetrisBlock_fall(curr_block, tetris_win, game_state)) {
 			TetrisBlock_destroy(curr_block);
 			TetrisBlock_init(&curr_block, TETRISBLOCKTYPE_SQUARE, 4, 4);
 		}

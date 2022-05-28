@@ -2,9 +2,10 @@
 #define TETRIS_BLOCK_H
 
 #include <ncurses.h>
+#include "game_state.h"
 #include "utils.h"
 
-typedef enum TetrisBlockType {
+typedef enum eTetrisBlockType {
 	TETRISBLOCKTYPE_SQUARE = 0,
 	TETRISBLOCKTYPE_S = 1
 } TetrisBlockType;
@@ -20,10 +21,10 @@ typedef enum TetrisBlockRotationType {
 	TETRISBLOCKROTATIONTYPE_NO_ROTATION
 } TetrisBlockRotationType;
 
-typedef struct TetrisBlock {
+typedef struct sTetrisBlock {
+	bool m_frozen;
 	TetrisBlockType m_type;
 	ColorScheme m_color_scheme;
-	bool falling;
 	int m_blk_size;
 	Point* m_blk_coords;
 	int m_world_pos_x;
@@ -33,21 +34,24 @@ typedef struct TetrisBlock {
 	TetrisBlockRotationType m_rotation_type;
 	int m_rotation_cnt;
 
-} TETRIS_BLOCK;
+} TetrisBlock;
 
-void TetrisBlock_init(TETRIS_BLOCK** self, TetrisBlockType block_type, int x, int y);
-void TetrisBlock_init_Square(TETRIS_BLOCK* self);
-void TetrisBlock_init_S(TETRIS_BLOCK* self);
-void TetrisBlock_destroy(TETRIS_BLOCK* self);
+void TetrisBlock_init(TetrisBlock** self, TetrisBlockType block_type, int x, int y);
+void TetrisBlock_init_Square(TetrisBlock* self);
+void TetrisBlock_init_S(TetrisBlock* self);
+void TetrisBlock_destroy(TetrisBlock* self);
 
-void TetrisBlock_move(TETRIS_BLOCK* self, WINDOW* h_win, int x, int y);
-void TetrisBlock_rotate(TETRIS_BLOCK* self, WINDOW* h_win);
-void _TetrisBlock_rotate_operation(TETRIS_BLOCK* self, bool clockwise);
+void TetrisBlock_move(TetrisBlock* self, WINDOW* h_win, GameState* h_state, int x, int y);
+bool TetrisBlock_fall(TetrisBlock* self, WINDOW* h_win, GameState* h_state);
+void TetrisBlock_rotate(TetrisBlock* self, WINDOW* h_win, GameState* h_state);
+void _TetrisBlock_rotate_operation(TetrisBlock* self, bool clockwise);
+void TetrisBlock_freeze(TetrisBlock* self, GameState* h_state);
 
-bool TetrisBlock_is_on_the_floor(TETRIS_BLOCK* self, WINDOW* h_win);
+bool TetrisBlock_cannot_fall(TetrisBlock* self, WINDOW* h_win, GameState* h_state);
+bool TetrisBlock_out_of_bounds(TetrisBlock* self, WINDOW* h_win);
+bool TetrisBlock_is_on_filled_point(TetrisBlock* self, GameState* h_state);
 
-bool TetrisBlock_out_of_bounds(TETRIS_BLOCK* self, WINDOW* h_win);
-void TetrisBlock_draw(TETRIS_BLOCK* self, WINDOW* h_win);
-void TetrisBlock_clear(TETRIS_BLOCK* self, WINDOW* h_win);
+void TetrisBlock_draw(TetrisBlock* self, WINDOW* h_win);
+void TetrisBlock_clear(TetrisBlock* self, WINDOW* h_win);
 
 #endif /* TETRIS_BLOCK_H */

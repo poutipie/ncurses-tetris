@@ -16,7 +16,7 @@ typedef struct sGameState {
 void GameState_init(GameState** self, WINDOW* h_win);
 void GameState_destroy(GameState* self);
 
-bool GameState_point_is_filled(GameState* self, Point point);
-void GameState_fill_points(GameState* self, Point* points, size_t points_size);
+bool GameState_point_filled(GameState* self, Point point);
+void GameState_fill_point(GameState* self, Point point);
 
 #endif /* GAMESTATE_H */
