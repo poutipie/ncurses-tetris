@@ -7,16 +7,16 @@ typedef struct sGameState {
 
     int score;
     /* ... */
-    Point* m_filled_points;
-    unsigned int m_filled_points_end;
-    size_t m_filled_points_size;
+    TetrisSquare* m_filled_squares;
+    unsigned int m_filled_squares_end;
+    size_t m_filled_squares_size;
 
 } GameState;
 
 void GameState_init(GameState** self, WINDOW* h_win);
 void GameState_destroy(GameState* self);
 
-bool GameState_point_filled(GameState* self, Point point);
-void GameState_fill_point(GameState* self, Point point);
+bool GameState_square_filled(GameState* self, Point position);
+void GameState_fill_square(GameState* self, Point position, ColorScheme color);
 
 #endif /* GAMESTATE_H */

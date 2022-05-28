@@ -18,6 +18,10 @@ typedef enum ColorScheme {
     COLORSCHEME_GREEN = 4
 } ColorScheme;
 
+typedef struct sTetrisSquare {
+    Point position;
+    ColorScheme color;
+} TetrisSquare;
 
 void ncurses_initialize_color_schemes();
 void set_window_colors_scheme(WINDOW* h_win, ColorScheme color_scheme) ;
