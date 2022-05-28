@@ -7,9 +7,11 @@ typedef struct sGameState {
 
     int score;
     /* ... */
-    TetrisSquare* m_filled_squares;
-    unsigned int m_filled_squares_end;
-    size_t m_filled_squares_size;
+
+    bool** m_filled_squares;
+    ColorScheme** m_filled_square_colors;
+    unsigned int total_rows;
+    unsigned int total_columns;
 
 } GameState;
 

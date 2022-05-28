@@ -18,14 +18,14 @@ typedef enum ColorScheme {
     COLORSCHEME_GREEN = 4
 } ColorScheme;
 
-typedef struct sTetrisSquare {
-    Point position;
-    ColorScheme color;
-} TetrisSquare;
-
 void ncurses_initialize_color_schemes();
 void set_window_colors_scheme(WINDOW* h_win, ColorScheme color_scheme) ;
 
+size_t tetris_row_count(WINDOW* h_win);
+size_t tetris_column_count(WINDOW* h_win);
+
+void draw_tetris_square(WINDOW* h_win, Point position, ColorScheme color);
+void clear_tetris_square(WINDOW* h_win, Point position);
 
 bool y_within_bounds(WINDOW* h_win, int y);
 bool x_within_bounds(WINDOW* h_win, int x);

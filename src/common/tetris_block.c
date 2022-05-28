@@ -195,7 +195,7 @@ bool TetrisBlock_cannot_fall(TetrisBlock* self, WINDOW* h_win, GameState* h_stat
         };
 
         if (
-            !y_within_bounds(h_win, new_position.y) || 
+            !y_within_bounds(h_win, new_position.y) ||
             GameState_square_filled(h_state, new_position)) {
             return true;
         }
@@ -241,23 +241,21 @@ bool TetrisBlock_is_on_filled_point(TetrisBlock* self, GameState* h_state) {
 
 void TetrisBlock_draw(TetrisBlock* self, WINDOW* h_win) {
 
-    wattron(h_win, COLOR_PAIR(self->m_color_scheme));
     for(int i = 0; i < self->m_blk_size; ++i) {
-        wmove(
-            h_win,
-            self->m_world_pos_y + self->m_blk_coords[i].y,
-            self->m_world_pos_x + self->m_blk_coords[i].x);
-        wprintw(h_win, "*");
+        Point draw_point = {
+            .x = self->m_world_pos_x + self->m_blk_coords[i].x,
+            .y = self->m_world_pos_y + self->m_blk_coords[i].y,
+        };
+        draw_tetris_square(h_win, draw_point, self->m_color_scheme);
     }
-    wattroff(h_win, COLOR_PAIR(self->m_color_scheme));
 }
+
 void TetrisBlock_clear(TetrisBlock* self, WINDOW* h_win) {
     for(int i = 0; i < self->m_blk_size; ++i) {
-        wmove(
-            h_win,
-            self->m_world_pos_y + self->m_blk_coords[i].y,
-            self->m_world_pos_x + self->m_blk_coords[i].x
-        );
-        wprintw(h_win, " ");
+        Point draw_point = {
+            .x = self->m_world_pos_x + self->m_blk_coords[i].x,
+            .y = self->m_world_pos_y + self->m_blk_coords[i].y,
+        };
+        clear_tetris_square(h_win, draw_point);
     }
 }
