@@ -21,4 +21,9 @@ void GameState_destroy(GameState* self);
 bool GameState_square_filled(GameState* self, Point position);
 void GameState_fill_square(GameState* self, Point position, ColorScheme color);
 
+bool GameState_row_filled(GameState* self, unsigned int row_index);
+int GameState_find_filled_row(GameState* self);
+
+void GameState_clear_row(GameState* self, WINDOW* h_win, unsigned int row_index);
+
 #endif /* GAMESTATE_H */

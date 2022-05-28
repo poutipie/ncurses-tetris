@@ -9,7 +9,7 @@ void GameLoop_init(GameLoop** self) {
     GameLoop_create_tetris_win(*self);
     set_window_colors_scheme((*self)->tetris_win, COLORSCHEME_WHITE);
     GameState_init(&(*self)->game_state, (*self)->tetris_win);
-    TetrisBlock_init(&(*self)->active_block, TETRISBLOCKTYPE_S, 4, 4);
+    TetrisBlock_init(&(*self)->active_block, TETRISBLOCKTYPE_S, 1, 1);
 
 }
 
@@ -21,8 +21,8 @@ void GameLoop_destroy(GameLoop* self) {
 
 void GameLoop_create_tetris_win(GameLoop* self) {
 
-    int height = 25;
-	int width = 20;
+    int height = 14;
+	int width = 10;
     /* Calculating for a center placement of the window*/
 	int starty = (LINES - height) / 2;
 	int startx = (COLS - width) / 2;
@@ -58,9 +58,16 @@ void GameLoop_game_loop(GameLoop* self) {
 		
     if (!TetrisBlock_fall(self->active_block, self->tetris_win, self->game_state)) {
         TetrisBlock_destroy(self->active_block);
-        TetrisBlock_init(&self->active_block, TETRISBLOCKTYPE_SQUARE, 4, 4);
+        TetrisBlock_init(&self->active_block, TETRISBLOCKTYPE_SQUARE, 1, 1);
+    }
+    
+    int filled_row = GameState_find_filled_row(self->game_state);
+    while (filled_row != -1) {
+        move(0,0);
+        printw("ROW WAS FILLED!");
+        GameState_clear_row(self->game_state, self->tetris_win, filled_row);
+        filled_row = GameState_find_filled_row(self->game_state);
     }
 
     wrefresh(self->tetris_win);
-
 }

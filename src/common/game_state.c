@@ -69,3 +69,65 @@ void GameState_fill_square(GameState* self, Point point, ColorScheme color) {
     self->m_filled_squares[point.y][point.x] = true;
     self->m_filled_square_colors[point.y][point.x] = color;
 }
+
+bool GameState_row_filled(GameState* self, unsigned int row_index) {
+
+    if (row_index < 0 || row_index >= self->total_rows) {
+        return false;
+    }
+
+    bool row_is_filled = true;
+    for (int i = 0; i < self->total_columns; ++i) {
+        row_is_filled &= self->m_filled_squares[row_index][i];
+        if (!row_is_filled) {
+            break;
+        }
+    }
+    return row_is_filled;
+}
+
+int GameState_find_filled_row(GameState* self) {
+    for (int i = 0; i < self->total_rows; ++i) {
+        if (GameState_row_filled(self, i)) {
+            return i;
+        }
+    }
+    return -1;
+}
+
+void GameState_clear_row(GameState* self, WINDOW* h_win, unsigned int row_index) {
+    if (row_index < 0 || row_index >= self->total_rows) {
+        return;
+    }
+
+    for (int i = row_index; i >= 0; --i) {
+        for (int j = 0; j < self->total_columns; ++j) {
+            
+            /* Clear Data */
+            self->m_filled_squares[i][j] = false;
+            self->m_filled_square_colors[i][j] = COLORSCHEME_BLACK;
+
+            /* Clear Graphic */
+            Point clear_position = {
+                .x = j,
+                .y = i
+            };
+            clear_tetris_square(h_win, clear_position);
+
+            /* Shift Data (if not uppermost row) */         
+            if (i == 0) {
+                break;
+            }
+            self->m_filled_squares[i][j] = self->m_filled_squares[i-1][j];
+            self->m_filled_square_colors[i][j] = 
+                self->m_filled_square_colors[i-1][j];
+            
+            /* Draw new graphic if we shifted an actual block */
+            if (self->m_filled_squares[i][j]) {
+                draw_tetris_square(h_win, clear_position, 
+                self->m_filled_square_colors[i][j]);
+            }
+        }
+    }
+
+}
