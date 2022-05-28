@@ -10,7 +10,7 @@ typedef enum eTetrisBlockType {
 	TETRISBLOCKTYPE_S = 1
 } TetrisBlockType;
 
-/* 
+/* Classic tetris rotations are a bit tricky:
 	1. L, J, and T rotate full circles
 	2. S, Z, and I rotate only +90 and -90 degrees
 	3. Square block never rotates
@@ -30,7 +30,6 @@ typedef struct sTetrisBlock {
 	int m_world_pos_x;
 	int m_world_pos_y;
 
-	/* Classic tetris rotations are a bit tricky for each block. */
 	TetrisBlockRotationType m_rotation_type;
 	int m_rotation_cnt;
 
