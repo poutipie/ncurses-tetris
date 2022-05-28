@@ -3,6 +3,7 @@
 #include <unistd.h>
 
 #include "tetris_block.h"
+#include "game_state.h"
 #include "utils.h"
 
 WINDOW *create_newwin(int height, int width, int starty, int startx);
@@ -10,9 +11,9 @@ void destroy_win(WINDOW *local_win);
 
 int main(int argc, char *argv[])
 {	
-	WINDOW *tetris_win;
-	TETRIS_BLOCK* my_rect;
-
+	WINDOW* tetris_win;
+	GameState* game_state;
+	TETRIS_BLOCK* curr_block;
 	int startx, starty, width, height;
 
 	initscr();			/* Start curses mode 		*/
@@ -22,6 +23,7 @@ int main(int argc, char *argv[])
 		printf("Your terminal does not support color\n");
 		return 1;
 	}
+	
 	start_color();
 	ncurses_initialize_color_schemes();
 	set_window_colors_scheme(stdscr, COLORSCHEME_BLACK);
@@ -31,16 +33,17 @@ int main(int argc, char *argv[])
 	wtimeout(stdscr, 500); /* Make sure getch does not block execution */
 	curs_set(0); /* Hide ncurses cursos */
 
-	TetrisBlock_init(&my_rect, TETRISBLOCKTYPE_S, 4, 4);
+	TetrisBlock_init(&curr_block, TETRISBLOCKTYPE_S, 4, 4);
 
-	height = 50;
-	width = 40;
+	height = 25;
+	width = 20;
 	starty = (LINES - height) / 2;	
 	/* Calculating for a center placement */
 	startx = (COLS - width) / 2;	/* of the window		*/
 	refresh();
 
 	tetris_win = create_newwin(height, width, starty, startx);
+	GameState_init(&game_state, tetris_win);
 	set_window_colors_scheme(tetris_win, COLORSCHEME_WHITE);
 
 
@@ -52,22 +55,31 @@ int main(int argc, char *argv[])
 		ch = wgetch(stdscr);
 		switch(ch) {
 			case KEY_LEFT:
-				TetrisBlock_move(my_rect, tetris_win, -1, 0);
+				TetrisBlock_move(curr_block, tetris_win, -1, 0);
 				break;
 			case KEY_RIGHT:
-				TetrisBlock_move(my_rect, tetris_win, 1, 0);
+				TetrisBlock_move(curr_block, tetris_win, 1, 0);
 				break;
 			case KEY_UP:
-				TetrisBlock_rotate(my_rect, tetris_win);
+				TetrisBlock_rotate(curr_block, tetris_win);
 			default:
-				TetrisBlock_move(my_rect, tetris_win, 0, 0);
+				TetrisBlock_move(curr_block, tetris_win, 0, 0);
 				break;
 		}
-		TetrisBlock_move(my_rect, tetris_win, 0, 1);
+		TetrisBlock_move(curr_block, tetris_win, 0, 1);
+		
+		if (TetrisBlock_is_on_the_floor(curr_block, tetris_win)) {
+			GameState_fill_points(game_state, curr_block->m_blk_coords, 
+				curr_block->m_blk_size
+			);
+			TetrisBlock_destroy(curr_block);
+			TetrisBlock_init(&curr_block, TETRISBLOCKTYPE_SQUARE, 4, 4);
+		}
+		
 		wrefresh(tetris_win);
 	}
 	endwin();			/* End curses mode		  */
-	TetrisBlock_destroy(my_rect);
+	TetrisBlock_destroy(curr_block);
 	return 0;
 }
 

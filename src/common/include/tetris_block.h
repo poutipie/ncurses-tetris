@@ -25,8 +25,7 @@ typedef struct TetrisBlock {
 	ColorScheme m_color_scheme;
 	bool falling;
 	int m_blk_size;
-	int* m_blk_x_coords;
-	int* m_blk_y_coords;
+	Point* m_blk_coords;
 	int m_world_pos_x;
 	int m_world_pos_y;
 
@@ -44,6 +43,8 @@ void TetrisBlock_destroy(TETRIS_BLOCK* self);
 void TetrisBlock_move(TETRIS_BLOCK* self, WINDOW* h_win, int x, int y);
 void TetrisBlock_rotate(TETRIS_BLOCK* self, WINDOW* h_win);
 void _TetrisBlock_rotate_operation(TETRIS_BLOCK* self, bool clockwise);
+
+bool TetrisBlock_is_on_the_floor(TETRIS_BLOCK* self, WINDOW* h_win);
 
 bool TetrisBlock_out_of_bounds(TETRIS_BLOCK* self, WINDOW* h_win);
 void TetrisBlock_draw(TETRIS_BLOCK* self, WINDOW* h_win);
