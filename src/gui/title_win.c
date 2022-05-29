@@ -1,7 +1,5 @@
 #include "title_win.h"
 
-#include <stdlib.h>
-
 void TitleWin_init(TitleWin** self) {
     *self = (TitleWin*)malloc(sizeof(TitleWin));
     _TitleWin_create_win(*self);

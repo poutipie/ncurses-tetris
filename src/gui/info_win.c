@@ -1,5 +1,4 @@
 #include "info_win.h"
-#include <stdlib.h>
 
 void InfoWin_init(InfoWin** self) {
     *self = (InfoWin*)malloc(sizeof(InfoWin));

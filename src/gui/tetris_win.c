@@ -1,6 +1,5 @@
 
 #include "tetris_win.h"
-#include <stdlib.h>
 
 void TetrisWin_init(TetrisWin** self) {
 

@@ -1,7 +1,5 @@
 #include "score_win.h"
 
-#include <stdlib.h>
-
 void ScoreWin_init(ScoreWin** self) {
     *self = (ScoreWin*)malloc(sizeof(ScoreWin));
     _ScoreWin_create_win(*self);
