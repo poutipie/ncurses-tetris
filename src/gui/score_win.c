@@ -30,7 +30,6 @@ void ScoreWin_destroy(ScoreWin* self) {
 
 void ScoreWin_draw(ScoreWin* self, GameState* h_game_state) {
 
-    wclear(self->m_win);
     box(self->m_win, 0 , 0);
     wmove(self->m_win, 1, 1);
     wprintw(self->m_win, "Score:");
