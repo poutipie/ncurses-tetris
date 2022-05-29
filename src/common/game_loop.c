@@ -6,6 +6,8 @@ void GameLoop_init(GameLoop** self) {
 
     *self = (GameLoop*)malloc(sizeof(GameLoop));
 
+    (*self)->exiting = false;
+
     TetrisGrid_init(&(*self)->tetris_grid, TETRIS_ROWS, TETRIS_COLUMNS);
     GameLoop_start_new_block(*self);
     GameState_init(&(*self)->game_state, (*self)->tetris_grid, (*self)->active_block);
@@ -35,15 +37,23 @@ void GameLoop_game_loop(GameLoop* self) {
 
     int ch = wgetch(stdscr);
 
-    if (ch == 'r') {
-        GameLoop_reset(self);
+    /* Handle menu keys */
+    switch(ch) {
+        case 'r':
+            GameLoop_reset(self);
+            return;
+        case 'q':
+            self->exiting = true;
+            return;
+        default:
+            break;
+    }
+
+    if (self->game_state->game_over || self->exiting) {
         return;
     }
 
-    if (self->game_state->game_over) {
-        return;
-    }
-
+    /* Handle action keys */
     switch(ch) {
         case KEY_LEFT:
             TetrisBlock_move(self->active_block, self->tetris_grid, -1, 0);

@@ -9,8 +9,6 @@ void TitleWin_init(TitleWin** self) {
 
 void _TitleWin_create_win(TitleWin* self) {
 
-    WINDOW* local_win;
-
     self->m_height = 3;
     self->m_width = (TETRIS_COLUMNS + 2) * 3;
 

@@ -8,6 +8,9 @@
 #include "tetris_grid.h"
 
 typedef struct sGameLoop {
+
+    bool exiting;
+
     GameState* game_state;
     TetrisGrid* tetris_grid;
     TetrisBlock* active_block;
