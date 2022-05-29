@@ -19,7 +19,6 @@ typedef enum ColorScheme {
     COLORSCHEME_GREEN = 4
 } ColorScheme;
 
-WINDOW* create_score_win();
 void destroy_gui_win(WINDOW* h_tetris_win);
 
 void ncurses_initialize_color_schemes();

@@ -6,9 +6,7 @@
 #include "game_state.h"
 
 typedef struct sTetrisWin {
-
     WINDOW* m_win;
-
 } TetrisWin;
 
 void TetrisWin_init(TetrisWin** self);
