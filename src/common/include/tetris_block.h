@@ -2,7 +2,7 @@
 #define TETRIS_BLOCK_H
 
 #include <ncurses.h>
-#include "game_state.h"
+#include "tetris_grid.h"
 #include "utils.h"
 
 typedef enum eTetrisBlockType {
@@ -40,15 +40,15 @@ void TetrisBlock_init_Square(TetrisBlock* self);
 void TetrisBlock_init_S(TetrisBlock* self);
 void TetrisBlock_destroy(TetrisBlock* self);
 
-void TetrisBlock_move(TetrisBlock* self, WINDOW* h_win, GameState* h_state, int x, int y);
-bool TetrisBlock_fall(TetrisBlock* self, WINDOW* h_win, GameState* h_state);
-void TetrisBlock_rotate(TetrisBlock* self, WINDOW* h_win, GameState* h_state);
+void TetrisBlock_move(TetrisBlock* self, WINDOW* h_win, TetrisGrid* h_grid, int x, int y);
+bool TetrisBlock_fall(TetrisBlock* self, WINDOW* h_win, TetrisGrid* h_grid);
+void TetrisBlock_rotate(TetrisBlock* self, WINDOW* h_win, TetrisGrid* h_grid);
 void _TetrisBlock_rotate_operation(TetrisBlock* self, bool clockwise);
-void TetrisBlock_freeze(TetrisBlock* self, GameState* h_state);
+void TetrisBlock_freeze(TetrisBlock* self, TetrisGrid* h_grid);
 
-bool TetrisBlock_cannot_fall(TetrisBlock* self, WINDOW* h_win, GameState* h_state);
+bool TetrisBlock_cannot_fall(TetrisBlock* self, WINDOW* h_win, TetrisGrid* h_grid);
 bool TetrisBlock_out_of_bounds(TetrisBlock* self, WINDOW* h_win);
-bool TetrisBlock_is_on_filled_point(TetrisBlock* self, GameState* h_state);
+bool TetrisBlock_is_on_filled_point(TetrisBlock* self, TetrisGrid* h_grid);
 
 void TetrisBlock_draw(TetrisBlock* self, WINDOW* h_win);
 void TetrisBlock_clear(TetrisBlock* self, WINDOW* h_win);
