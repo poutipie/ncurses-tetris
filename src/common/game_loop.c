@@ -17,11 +17,32 @@ void GameLoop_destroy(GameLoop* self) {
     TetrisBlock_destroy(self->active_block);
     TetrisGrid_destroy(self->tetris_grid);
     GameState_destroy(self->game_state);
+    free(self);
+}
+
+void GameLoop_reset(GameLoop* self) {
+
+    TetrisBlock_destroy(self->active_block);
+    TetrisGrid_destroy(self->tetris_grid);
+    GameState_destroy(self->game_state);
+
+    TetrisGrid_init(&self->tetris_grid, TETRIS_ROWS, TETRIS_COLUMNS);
+    GameLoop_start_new_block(self);
+    GameState_init(&self->game_state, self->tetris_grid, self->active_block);
 }
 
 void GameLoop_game_loop(GameLoop* self) {
 
     int ch = wgetch(stdscr);
+
+    if (ch == 'r') {
+        GameLoop_reset(self);
+        return;
+    }
+
+    if (self->game_state->game_over) {
+        return;
+    }
 
     switch(ch) {
         case KEY_LEFT:
@@ -32,6 +53,7 @@ void GameLoop_game_loop(GameLoop* self) {
             break;
         case KEY_UP:
             TetrisBlock_rotate(self->active_block, self->tetris_grid);
+            break;
         default:
             break;
     }
@@ -53,5 +75,9 @@ void GameLoop_start_new_block(GameLoop* self) {
 
     TetrisBlockType new_block_type = rand() % 2;
     TetrisBlock_init(&self->active_block, new_block_type, TETRIS_COLUMNS/2, 0);
+
+    if (TetrisBlock_is_on_filled_point(self->active_block, self->tetris_grid)) {
+        self->game_state->game_over = true;
+    }
 
 }

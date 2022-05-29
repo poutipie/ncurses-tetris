@@ -53,6 +53,12 @@ void TetrisWin_draw(TetrisWin* self, GameState* h_game_state) {
         }
     }
 
+    if (h_game_state->game_over) {
+        TetrisWin_draw_game_over(self);
+        wrefresh(self->m_win);
+        return;
+    }
+
     /* Draw the block */
     for(int i = 0; i < h_blk->m_blk_size; ++i) {
 
@@ -66,6 +72,16 @@ void TetrisWin_draw(TetrisWin* self, GameState* h_game_state) {
     }
 
     wrefresh(self->m_win);
+}
+
+void TetrisWin_draw_game_over(TetrisWin* self) {
+
+    char text[] = "GAME OVER";
+    size_t text_len = sizeof(text) -1;
+
+    wmove(self->m_win, (TETRIS_ROWS + 2) / 2, (TETRIS_COLUMNS + 2- text_len) / 2);
+    wprintw(self->m_win, "%s", text);
+
 }
 
 void _TetrisWin_draw_tetris_square(TetrisWin* self, Point position, ColorScheme color) {

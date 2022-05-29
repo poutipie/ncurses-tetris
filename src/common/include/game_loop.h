@@ -16,6 +16,7 @@ typedef struct sGameLoop {
 
 void GameLoop_init(GameLoop** self);
 void GameLoop_destroy(GameLoop* self);
+void GameLoop_reset(GameLoop* self);
 
 void GameLoop_game_loop(GameLoop* self);
 

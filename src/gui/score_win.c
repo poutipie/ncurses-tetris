@@ -34,6 +34,8 @@ void ScoreWin_draw(ScoreWin* self, GameState* h_game_state) {
     wmove(self->m_win, 1, 1);
     wprintw(self->m_win, "Score:");
     wmove(self->m_win, 2, 1);
+    wprintw(self->m_win, "     ");
+    wmove(self->m_win, 2, 1);
     wprintw(self->m_win, "%d", h_game_state->score);
     wrefresh(self->m_win);
 }
