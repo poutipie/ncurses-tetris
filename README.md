@@ -1,11 +1,11 @@
 
 # README ncurses-tetris
 
-This is a simple weekend project I did to learn a little more about C and the ncurses library. Results is a fully playable tetris game with a game loop and a scoring system.
+This is a simple weekend hacking project I did to learn a little more about C and the ncurses library. Results is a fully playable tetris game with a game loop and a scoring system.
 
 # Building
 
-ncurses-tetris depends on ncurses to for building. So before running make execute:
+ncurses-tetris depends on ncurses to for building. So before running `make`, execute:
 
 ```
 git clone https://github.com/poutipie/ncurses-tetris

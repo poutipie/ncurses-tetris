@@ -29,4 +29,3 @@ int TetrisGrid_find_filled_row(TetrisGrid* self);
 void TetrisGrid_clear_row(TetrisGrid* self, unsigned int row_index);
 
 #endif  /* TETRIS_GRID_H */
-#
