@@ -63,8 +63,6 @@ bool TetrisGrid_square_filled(TetrisGrid* self, Point position) {
     }
 
     if (self->filled_squares[position.y][position.x]) {
-        move(1, 0);
-        printw("FILLED!!");
         return true;
     }
     return false;

@@ -7,7 +7,7 @@ void GameLoop_init(GameLoop** self) {
     *self = (GameLoop*)malloc(sizeof(GameLoop));
 
     TetrisGrid_init(&(*self)->tetris_grid, TETRIS_ROWS, TETRIS_COLUMNS);
-    TetrisBlock_init(&(*self)->active_block, TETRISBLOCKTYPE_S, 1, 1);
+    GameLoop_start_new_block(*self);
     GameState_init(&(*self)->game_state, (*self)->tetris_grid, (*self)->active_block);
 
 }
@@ -33,13 +33,12 @@ void GameLoop_game_loop(GameLoop* self) {
         case KEY_UP:
             TetrisBlock_rotate(self->active_block, self->tetris_grid);
         default:
-            TetrisBlock_move(self->active_block, self->tetris_grid, 0, 0);
             break;
     }
 		
     if (!TetrisBlock_fall(self->active_block, self->tetris_grid)) {
         TetrisBlock_destroy(self->active_block);
-        TetrisBlock_init(&self->active_block, TETRISBLOCKTYPE_SQUARE, 1, 1);
+        GameLoop_start_new_block(self);
     }
     
     int filled_row = TetrisGrid_find_filled_row(self->tetris_grid);
@@ -48,4 +47,11 @@ void GameLoop_game_loop(GameLoop* self) {
         filled_row = TetrisGrid_find_filled_row(self->tetris_grid);
         self->game_state->score += 50;
     }
+}
+
+void GameLoop_start_new_block(GameLoop* self) {
+
+    TetrisBlockType new_block_type = rand() % 2;
+    TetrisBlock_init(&self->active_block, new_block_type, TETRIS_COLUMNS/2, 0);
+
 }

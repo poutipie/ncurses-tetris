@@ -19,4 +19,6 @@ void GameLoop_destroy(GameLoop* self);
 
 void GameLoop_game_loop(GameLoop* self);
 
+void GameLoop_start_new_block(GameLoop* self);
+
 #endif /* GAME_LOOP_H */

@@ -7,6 +7,7 @@
 
 typedef struct sGameState {
 
+    bool game_over;
     int score;
     /* ... */
     TetrisGrid* h_tetris_grid;
