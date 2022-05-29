@@ -31,31 +31,12 @@ void clear_tetris_square(WINDOW* h_win, Point position) {
     wprintw(h_win, " ");
 }
 
-bool y_within_bounds(WINDOW* h_win, int y) {
-	size_t num_rows = tetris_row_count(h_win);
-	return  ! (y < 0 || y > num_rows - 1);
+bool y_within_bounds(int y) {
+	return  ! (y < 0 || y > TETRIS_ROWS - 1);
 }
 
-bool x_within_bounds(WINDOW* h_win, int x) {
-	size_t num_columns = tetris_column_count(h_win);
-	return ! ( x < 0 || x > num_columns - 1);
-}
-
-WINDOW* create_tetris_win() {
-
-	WINDOW* local_win;
-
-    int height = TETRIS_ROWS + 2;
-	int width = TETRIS_COLUMNS + 2;
-    /* Calculating for a center placement of the window*/
-	int starty = (LINES - height) / 2;
-	int startx = (COLS - width) / 2;
-
-	local_win = newwin(height, width, starty, startx);
-	box(local_win, 0 , 0);		/* 0, 0 gives default box outline*/
-	wrefresh(local_win);		/* Show that box 		*/
-	set_window_colors_scheme(local_win, COLORSCHEME_WHITE);
-	return local_win;
+bool x_within_bounds(int x) {
+	return ! ( x < 0 || x > TETRIS_COLUMNS - 1);
 }
 
 WINDOW* create_score_win() {

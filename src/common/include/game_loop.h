@@ -8,15 +8,13 @@
 #include "tetris_grid.h"
 
 typedef struct sGameLoop {
-
-    WINDOW* h_tetris_win;
     GameState* game_state;
     TetrisGrid* tetris_grid;
     TetrisBlock* active_block;
 
 } GameLoop;
 
-void GameLoop_init(GameLoop** self, WINDOW* h_tetris_win);
+void GameLoop_init(GameLoop** self);
 void GameLoop_destroy(GameLoop* self);
 
 void GameLoop_game_loop(GameLoop* self);

@@ -23,7 +23,7 @@ void TetrisGrid_fill_square(TetrisGrid* self, Point position, ColorScheme color)
 bool TetrisGrid_row_filled(TetrisGrid* self, unsigned int row_index);
 int TetrisGrid_find_filled_row(TetrisGrid* self);
 
-void TetrisGrid_clear_row(TetrisGrid* self, WINDOW* h_win, unsigned int row_index);
+void TetrisGrid_clear_row(TetrisGrid* self, unsigned int row_index);
 
 #endif  /* TETRIS_GRID_H */
 #

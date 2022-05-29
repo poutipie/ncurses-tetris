@@ -92,7 +92,7 @@ int TetrisGrid_find_filled_row(TetrisGrid* self) {
     return -1;
 }
 
-void TetrisGrid_clear_row(TetrisGrid* self, WINDOW* h_win, unsigned int row_index) {
+void TetrisGrid_clear_row(TetrisGrid* self, unsigned int row_index) {
     if (row_index < 0 || row_index >= self->total_rows) {
         return;
     }
@@ -104,13 +104,6 @@ void TetrisGrid_clear_row(TetrisGrid* self, WINDOW* h_win, unsigned int row_inde
             self->filled_squares[i][j] = false;
             self->filled_square_colors[i][j] = COLORSCHEME_BLACK;
 
-            /* Clear Graphic */
-            Point clear_position = {
-                .x = j,
-                .y = i
-            };
-            clear_tetris_square(h_win, clear_position);
-
             /* Shift Data (if not uppermost row) */         
             if (i == 0) {
                 break;
@@ -118,12 +111,6 @@ void TetrisGrid_clear_row(TetrisGrid* self, WINDOW* h_win, unsigned int row_inde
             self->filled_squares[i][j] = self->filled_squares[i-1][j];
             self->filled_square_colors[i][j] = 
                 self->filled_square_colors[i-1][j];
-            
-            /* Draw new graphic if we shifted an actual block */
-            if (self->filled_squares[i][j]) {
-                draw_tetris_square(h_win, clear_position, 
-                self->filled_square_colors[i][j]);
-            }
         }
     }
 

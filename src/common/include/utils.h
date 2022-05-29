@@ -34,8 +34,8 @@ size_t tetris_column_count(WINDOW* h_win);
 void draw_tetris_square(WINDOW* h_win, Point position, ColorScheme color);
 void clear_tetris_square(WINDOW* h_win, Point position);
 
-bool y_within_bounds(WINDOW* h_win, int y);
-bool x_within_bounds(WINDOW* h_win, int x);
+bool y_within_bounds(int y);
+bool x_within_bounds(int x);
 void set_default_colors();
 
 #endif /* UTILS_H */

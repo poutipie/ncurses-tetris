@@ -82,7 +82,7 @@ void TetrisBlock_destroy(TetrisBlock* self) {
     free(self);
 }
 
-void TetrisBlock_move(TetrisBlock* self, WINDOW* h_win, TetrisGrid* h_state,
+void TetrisBlock_move(TetrisBlock* self, TetrisGrid* h_state,
     int x, int y)
 {
     if (self->m_frozen) {
@@ -96,30 +96,28 @@ void TetrisBlock_move(TetrisBlock* self, WINDOW* h_win, TetrisGrid* h_state,
             .y = self->m_blk_coords[i].y + y + self->m_world_pos_y
         };
 
-        movement_allowed &= x_within_bounds(h_win, new_position.x);
-        movement_allowed &= y_within_bounds(h_win, new_position.y);
+        movement_allowed &= x_within_bounds(new_position.x);
+        movement_allowed &= y_within_bounds(new_position.y);
         movement_allowed &= !TetrisGrid_square_filled(h_state, new_position);
     }
     if (movement_allowed == false) {
         return;
     }
 
-    TetrisBlock_clear(self, h_win);
     self->m_world_pos_x += x;
     self->m_world_pos_y += y;
-    TetrisBlock_draw(self, h_win);
 }
 
-bool TetrisBlock_fall(TetrisBlock* self, WINDOW* h_win, TetrisGrid* h_state) {
-    if (TetrisBlock_cannot_fall(self, h_win, h_state)) {
+bool TetrisBlock_fall(TetrisBlock* self, TetrisGrid* h_state) {
+    if (TetrisBlock_cannot_fall(self, h_state)) {
         TetrisBlock_freeze(self, h_state);
         return false;
     }
-    TetrisBlock_move(self, h_win, h_state, 0, 1);
+    TetrisBlock_move(self, h_state, 0, 1);
     return true;
 }
 
-void TetrisBlock_rotate(TetrisBlock* self, WINDOW* h_win, TetrisGrid* h_state)
+void TetrisBlock_rotate(TetrisBlock* self, TetrisGrid* h_state)
 {
     if (self->m_frozen) {
         return;
@@ -140,16 +138,14 @@ void TetrisBlock_rotate(TetrisBlock* self, WINDOW* h_win, TetrisGrid* h_state)
         rotate_clockwise = true;
     }
 
-    TetrisBlock_clear(self, h_win);
     _TetrisBlock_rotate_operation(self, rotate_clockwise);
     /* Revert back to original rotation if block does not stay in bounds. */
     if (
-        TetrisBlock_out_of_bounds(self, h_win) ||
+        TetrisBlock_out_of_bounds(self) ||
         TetrisBlock_is_on_filled_point(self, h_state)
     ) {
         _TetrisBlock_rotate_operation(self, !rotate_clockwise);
     }
-    TetrisBlock_draw(self, h_win);
 
     ++self->m_rotation_cnt;
 }
@@ -183,9 +179,7 @@ void TetrisBlock_freeze(TetrisBlock* self, TetrisGrid* h_state) {
     }
 }
 
-bool TetrisBlock_cannot_fall(TetrisBlock* self, WINDOW* h_win, TetrisGrid* h_state) {
-
-    int max_y = getmaxy(h_win) - 2;
+bool TetrisBlock_cannot_fall(TetrisBlock* self, TetrisGrid* h_state) {
     
     for(int i = 0; i < self->m_blk_size; ++i) {
 
@@ -195,7 +189,7 @@ bool TetrisBlock_cannot_fall(TetrisBlock* self, WINDOW* h_win, TetrisGrid* h_sta
         };
 
         if (
-            !y_within_bounds(h_win, new_position.y) ||
+            !y_within_bounds(new_position.y) ||
             TetrisGrid_square_filled(h_state, new_position)) {
             return true;
         }
@@ -204,15 +198,15 @@ bool TetrisBlock_cannot_fall(TetrisBlock* self, WINDOW* h_win, TetrisGrid* h_sta
     return false;
 }
 
-bool TetrisBlock_out_of_bounds(TetrisBlock* self, WINDOW* h_win) {
+bool TetrisBlock_out_of_bounds(TetrisBlock* self) {
 
     bool within_bounds = true;
     for (int i = 0; i < self->m_blk_size; ++i) {
         within_bounds &= x_within_bounds(
-            h_win, self->m_blk_coords[i].x + self->m_world_pos_x
+            self->m_blk_coords[i].x + self->m_world_pos_x
         );
         within_bounds &= y_within_bounds(
-            h_win, self->m_blk_coords[i].y + self->m_world_pos_y
+            self->m_blk_coords[i].y + self->m_world_pos_y
         );
     }
     return !within_bounds;
@@ -236,26 +230,4 @@ bool TetrisBlock_is_on_filled_point(TetrisBlock* self, TetrisGrid* h_state) {
         }
     }
     return on_filled_point;
-
-}
-
-void TetrisBlock_draw(TetrisBlock* self, WINDOW* h_win) {
-
-    for(int i = 0; i < self->m_blk_size; ++i) {
-        Point draw_point = {
-            .x = self->m_world_pos_x + self->m_blk_coords[i].x,
-            .y = self->m_world_pos_y + self->m_blk_coords[i].y,
-        };
-        draw_tetris_square(h_win, draw_point, self->m_color_scheme);
-    }
-}
-
-void TetrisBlock_clear(TetrisBlock* self, WINDOW* h_win) {
-    for(int i = 0; i < self->m_blk_size; ++i) {
-        Point draw_point = {
-            .x = self->m_world_pos_x + self->m_blk_coords[i].x,
-            .y = self->m_world_pos_y + self->m_blk_coords[i].y,
-        };
-        clear_tetris_square(h_win, draw_point);
-    }
 }

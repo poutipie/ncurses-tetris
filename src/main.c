@@ -5,6 +5,7 @@
 #include "tetris_block.h"
 #include "game_state.h"
 #include "game_loop.h"
+#include "tetris_win.h"
 #include "utils.h"
 
 WINDOW *create_newwin(int height, int width, int starty, int startx);
@@ -13,7 +14,8 @@ void destroy_win(WINDOW *local_win);
 int main(int argc, char *argv[])
 {	
 	GameLoop* game_loop;
-	WINDOW* h_tetris_win;
+
+	TetrisWin* h_tetris_win;
 	WINDOW* h_score_win;
 
 	initscr();			/* Start curses mode 		*/
@@ -34,17 +36,17 @@ int main(int argc, char *argv[])
 	curs_set(0); /* Hide cursor highlighting */
 
 
-	h_tetris_win = create_tetris_win();
+	TetrisWin_init(&h_tetris_win);
 	h_score_win = create_score_win();
-	GameLoop_init(&game_loop, h_tetris_win);
+	GameLoop_init(&game_loop);
 
 	// Animation loop
 	while(true) {
 		GameLoop_game_loop(game_loop);
-		wrefresh(h_tetris_win);
+		TetrisWin_draw(h_tetris_win, game_loop->game_state);
 		wrefresh(h_score_win);
 	}
-	destroy_gui_win(h_tetris_win);
+	TetrisWin_destroy(h_tetris_win);
 	destroy_gui_win(h_score_win);
 	endwin();			/* End curses mode		  */
 	return 0;
