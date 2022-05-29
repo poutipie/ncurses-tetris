@@ -25,7 +25,4 @@ void destroy_gui_win(WINDOW* h_tetris_win);
 void ncurses_initialize_color_schemes();
 void set_window_colors_scheme(WINDOW* h_win, ColorScheme color_scheme) ;
 
-void draw_tetris_square(WINDOW* h_win, Point position, ColorScheme color);
-void clear_tetris_square(WINDOW* h_win, Point position);
-
 #endif /* UTILS_H */

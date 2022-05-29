@@ -17,4 +17,7 @@ void TetrisWin_destroy(TetrisWin* self);
 
 void TetrisWin_draw(TetrisWin* self, GameState* h_game_state);
 
+void _TetrisWin_draw_tetris_square(TetrisWin* self, Point position, ColorScheme color);
+void _TetrisWin_clear_tetris_square(TetrisWin* self, Point position);
+
 #endif /* TETRIS_WIN_H */
