@@ -29,6 +29,12 @@ int main(int argc, char *argv[])
 		printf("Your terminal does not support color\n");
 		return 1;
 	}
+
+	if (LINES < 33 || COLS < 45) {
+		endwin();
+		printf("Your terminal should have at least 33 lines and 45 columns\n");
+		return 1;
+	}
 	
 	start_color();
 	ncurses_initialize_color_schemes();

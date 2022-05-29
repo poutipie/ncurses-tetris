@@ -6,7 +6,7 @@ void InfoWin_init(InfoWin** self) {
 }
 void _InfoWin_create_win(InfoWin* self) {
 
-    self->m_height = 10;
+    self->m_height = 7;
     self->m_width = (TETRIS_COLUMNS + 2) * 3;
 
 	int starty = (LINES - TETRIS_ROWS - 2) / 2 + TETRIS_ROWS + 2;
