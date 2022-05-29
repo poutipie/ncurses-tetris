@@ -4,9 +4,16 @@
 #include "tetris_grid.h"
 #include "types.h"
 
+#define TETRISBLOCKS_COUNT 7
+
 typedef enum eTetrisBlockType {
 	TETRISBLOCKTYPE_SQUARE = 0,
-	TETRISBLOCKTYPE_S = 1
+	TETRISBLOCKTYPE_S      = 1,
+	TETRISBLOCKTYPE_Z      = 2,
+	TETRISBLOCKTYPE_L      = 3,
+	TETRISBLOCKTYPE_J      = 4,
+	TETRISBLOCKTYPE_I      = 5,
+	TETRISBLOCKTYPE_T      = 6
 } TetrisBlockType;
 
 /* Classic tetris rotations are a bit tricky:
@@ -38,6 +45,11 @@ void TetrisBlock_init(TetrisBlock** self, TetrisBlockType block_type, int x, int
 void TetrisBlock_destroy(TetrisBlock** self);
 void TetrisBlock_init_Square(TetrisBlock* self);
 void TetrisBlock_init_S(TetrisBlock* self);
+void TetrisBlock_init_Z(TetrisBlock* self);
+void TetrisBlock_init_L(TetrisBlock* self);
+void TetrisBlock_init_J(TetrisBlock* self);
+void TetrisBlock_init_I(TetrisBlock* self);
+void TetrisBlock_init_T(TetrisBlock* self);
 
 void TetrisBlock_move(TetrisBlock* self, TetrisGrid* h_grid, int x, int y);
 bool TetrisBlock_fall(TetrisBlock* self, TetrisGrid* h_grid);

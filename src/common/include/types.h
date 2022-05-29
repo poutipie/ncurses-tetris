@@ -13,10 +13,14 @@ typedef struct sPoint {
 } Point;
 
 typedef enum ColorScheme {
-	COLORSCHEME_BLACK  = 1,
-	COLORSCHEME_WHITE  = 2,
-    COLORSCHEME_YELLOW = 3,
-    COLORSCHEME_GREEN = 4
+	COLORSCHEME_BLACK   = 1,
+	COLORSCHEME_WHITE   = 2,
+    COLORSCHEME_YELLOW  = 3,
+    COLORSCHEME_RED     = 4,
+    COLORSCHEME_GREEN   = 5,
+    COLORSCHEME_BLUE    = 6,
+    COLORSCHEME_CYAN    = 7,
+    COLORSCHEME_MAGENTA = 8
 } ColorScheme;
 
 

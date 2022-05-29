@@ -102,7 +102,7 @@ void GameLoop_create_next_block(GameLoop* self) {
         TetrisBlock_destroy(&self->next_block);
     }
 
-    TetrisBlockType new_block_type = rand() % 2;
+    TetrisBlockType new_block_type = rand() % TETRISBLOCKS_COUNT;
     TetrisBlock_init(&self->next_block, new_block_type, TETRIS_COLUMNS/2, 0);
 
 }

@@ -33,6 +33,8 @@ void TetrisWin_draw(TetrisWin* self, GameState* h_game_state) {
     TetrisGrid* h_grid = h_game_state->h_tetris_grid;
     TetrisBlock* h_blk = h_game_state->h_tetris_block;
 
+    box(self->m_win, 0 , 0);		/* Draw outline */
+
     /* Draw the grid */
     for(int i = 0; i < h_grid->total_rows; ++i) {
         for (int j = 0; j < h_grid->total_columns; ++j) {

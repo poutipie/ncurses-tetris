@@ -21,6 +21,21 @@ void TetrisBlock_init(TetrisBlock** self, TetrisBlockType block_type, int x, int
         case TETRISBLOCKTYPE_S:
             TetrisBlock_init_S(*self);
             break;
+        case TETRISBLOCKTYPE_Z:
+            TetrisBlock_init_Z(*self);
+            break;
+        case TETRISBLOCKTYPE_L:
+            TetrisBlock_init_L(*self);
+            break;
+        case TETRISBLOCKTYPE_J:
+            TetrisBlock_init_J(*self);
+            break;
+        case TETRISBLOCKTYPE_I:
+            TetrisBlock_init_I(*self);
+            break;
+        case TETRISBLOCKTYPE_T:
+            TetrisBlock_init_T(*self);
+            break;
         default:
             break;
     }
@@ -34,22 +49,10 @@ void TetrisBlock_init_Square(TetrisBlock* self) {
     self->m_blk_size = 4;
     self->m_blk_coords = (Point*)malloc(self->m_blk_size * sizeof(Point));
 
-    /* Top left corner */
-    self->m_blk_coords[0].x = 0;
-    self->m_blk_coords[0].y = 0;
-    
-    /* Top right corner */
-    self->m_blk_coords[1].x = 1;
-    self->m_blk_coords[1].y = 0;
-
-    /* Bottom left corner */
-    self->m_blk_coords[2].x = 0;
-    self->m_blk_coords[2].y = 1;
-
-    /* Bottom right corner */
-    self->m_blk_coords[3].x = 1;
-    self->m_blk_coords[3].y = 1;
-    
+    self->m_blk_coords[0] = (Point){.x = 0, .y = 0};
+    self->m_blk_coords[1] = (Point){.x = 1, .y = 0};
+    self->m_blk_coords[2] = (Point){.x = 0, .y = 1};
+    self->m_blk_coords[3] = (Point){.x = 1, .y = 1};
 
 }
 
@@ -60,21 +63,74 @@ void TetrisBlock_init_S(TetrisBlock* self) {
     self->m_blk_size = 4;
     self->m_blk_coords = (Point*)malloc(self->m_blk_size * sizeof(Point));
 
-    /* Top left corner */
-    self->m_blk_coords[0].x = 0;
-    self->m_blk_coords[0].y = 0;
+    self->m_blk_coords[0] = (Point){.x = 0, .y = 0};
+    self->m_blk_coords[1] = (Point){.x = 1, .y = 0};
+    self->m_blk_coords[2] = (Point){.x = -1, .y = 1};
+    self->m_blk_coords[3] = (Point){.x = 0, .y = 1};
+}
 
-    /* Top right corner */
-    self->m_blk_coords[1].x = 1;
-    self->m_blk_coords[1].y = 0;
+void TetrisBlock_init_Z(TetrisBlock* self) {
 
-    /* Bottom left corner */
-    self->m_blk_coords[2].x = -1;
-    self->m_blk_coords[2].y = 1;
+    self->m_color_scheme = COLORSCHEME_RED;
+    self->m_rotation_type = TETRISBLOCKROTATIONTYPE_TWOWAYS;
+    self->m_blk_size = 4;
+    self->m_blk_coords = (Point*)malloc(self->m_blk_size * sizeof(Point));
 
-    /* Bottom right corner */
-    self->m_blk_coords[3].x = 0;
-    self->m_blk_coords[3].y = 1;
+    self->m_blk_coords[0] = (Point){.x = -1, .y = 0};
+    self->m_blk_coords[1] = (Point){.x = 0, .y = 0};
+    self->m_blk_coords[2] = (Point){.x = 0, .y = 1};
+    self->m_blk_coords[3] = (Point){.x = 1, .y = 1};
+}
+
+void TetrisBlock_init_L(TetrisBlock* self) {
+
+    self->m_color_scheme = COLORSCHEME_BLUE;
+    self->m_rotation_type = TETRISBLOCKROTATIONTYPE_COMPLETE;
+    self->m_blk_size = 4;
+    self->m_blk_coords = (Point*)malloc(self->m_blk_size * sizeof(Point));
+
+    self->m_blk_coords[0] = (Point){.x = 0, .y = -1};
+    self->m_blk_coords[1] = (Point){.x = 0, .y = 0};
+    self->m_blk_coords[2] = (Point){.x = 0, .y = 1};
+    self->m_blk_coords[3] = (Point){.x = 1, .y = 1};
+
+}
+
+void TetrisBlock_init_J(TetrisBlock* self) {
+    self->m_color_scheme = COLORSCHEME_CYAN;
+    self->m_rotation_type = TETRISBLOCKROTATIONTYPE_COMPLETE;
+    self->m_blk_size = 4;
+    self->m_blk_coords = (Point*)malloc(self->m_blk_size * sizeof(Point));
+
+    self->m_blk_coords[0] = (Point){.x = 0, .y = -1};
+    self->m_blk_coords[1] = (Point){.x = 0, .y = 0};
+    self->m_blk_coords[2] = (Point){.x = 0, .y = 1};
+    self->m_blk_coords[3] = (Point){.x = -1, .y = 1};
+}
+
+void TetrisBlock_init_I(TetrisBlock* self) {
+    self->m_color_scheme = COLORSCHEME_MAGENTA;
+    self->m_rotation_type = TETRISBLOCKROTATIONTYPE_TWOWAYS;
+    self->m_blk_size = 4;
+    self->m_blk_coords = (Point*)malloc(self->m_blk_size * sizeof(Point));
+
+    self->m_blk_coords[0] = (Point){.x = 0, .y = -1};
+    self->m_blk_coords[1] = (Point){.x = 0, .y = 0};
+    self->m_blk_coords[2] = (Point){.x = 0, .y = 1};
+    self->m_blk_coords[3] = (Point){.x = 0, .y = 2};
+}
+
+void TetrisBlock_init_T(TetrisBlock* self) {
+    self->m_color_scheme = COLORSCHEME_BLACK;
+    self->m_rotation_type = TETRISBLOCKROTATIONTYPE_COMPLETE;
+    self->m_blk_size = 4;
+    self->m_blk_coords = (Point*)malloc(self->m_blk_size * sizeof(Point));
+
+    self->m_blk_coords[0] = (Point){.x = -1, .y = 0};
+    self->m_blk_coords[1] = (Point){.x = 0, .y = 0};
+    self->m_blk_coords[2] = (Point){.x = 1, .y = 0};
+    self->m_blk_coords[3] = (Point){.x = 0, .y = 1};
+
 }
 
 void TetrisBlock_destroy(TetrisBlock** self) {
