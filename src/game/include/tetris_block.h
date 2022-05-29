@@ -35,9 +35,9 @@ typedef struct sTetrisBlock {
 } TetrisBlock;
 
 void TetrisBlock_init(TetrisBlock** self, TetrisBlockType block_type, int x, int y);
+void TetrisBlock_destroy(TetrisBlock** self);
 void TetrisBlock_init_Square(TetrisBlock* self);
 void TetrisBlock_init_S(TetrisBlock* self);
-void TetrisBlock_destroy(TetrisBlock* self);
 
 void TetrisBlock_move(TetrisBlock* self, TetrisGrid* h_grid, int x, int y);
 bool TetrisBlock_fall(TetrisBlock* self, TetrisGrid* h_grid);

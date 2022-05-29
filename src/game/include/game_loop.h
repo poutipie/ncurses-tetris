@@ -14,15 +14,17 @@ typedef struct sGameLoop {
     GameState* game_state;
     TetrisGrid* tetris_grid;
     TetrisBlock* active_block;
+    TetrisBlock* next_block;
 
 } GameLoop;
 
 void GameLoop_init(GameLoop** self);
-void GameLoop_destroy(GameLoop* self);
+void GameLoop_destroy(GameLoop** self);
 void GameLoop_reset(GameLoop* self);
 
 void GameLoop_game_loop(GameLoop* self);
 
-void GameLoop_start_new_block(GameLoop* self);
+void GameLoop_create_next_block(GameLoop* self);
+void GameLoop_take_next_block(GameLoop* self);
 
 #endif /* GAME_LOOP_H */

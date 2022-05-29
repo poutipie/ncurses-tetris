@@ -15,7 +15,7 @@ typedef struct sTetrisGrid {
 
 
 void TetrisGrid_init(TetrisGrid** self, size_t rows, size_t cols);
-void TetrisGrid_destroy(TetrisGrid* self);
+void TetrisGrid_destroy(TetrisGrid** self);
 
 bool TetrisGrid_y_within_bounds(TetrisGrid* self, int y);
 bool TetrisGrid_x_within_bounds(TetrisGrid* self, int x);

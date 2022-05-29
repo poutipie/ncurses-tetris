@@ -20,13 +20,14 @@ void _TitleWin_create_win(TitleWin* self) {
 
 }
 
-void TitleWin_destroy(TitleWin* self) {
+void TitleWin_destroy(TitleWin** self) {
 
-    destroy_gui_win(self->m_win);
-    free(self);
+    destroy_gui_win((*self)->m_win);
+    free(*self);
+    *self = NULL;
 }
 
-void TitleWin_draw(TitleWin* self, GameState* h_game_state) {
+void TitleWin_draw(TitleWin* self) {
 
     char title[] = "NCurses Tetris";
 

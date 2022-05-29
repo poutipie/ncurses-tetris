@@ -14,8 +14,8 @@ typedef struct sInfoWin {
 
 void InfoWin_init(InfoWin** self);
 void _InfoWin_create_win(InfoWin* self);
-void InfoWin_destroy(InfoWin* self);
+void InfoWin_destroy(InfoWin** self);
 
-void InfoWin_draw(InfoWin* self, GameState* h_game_state);
+void InfoWin_draw(InfoWin* self);
 
 #endif /* INFO_WIN_H */

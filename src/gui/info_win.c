@@ -17,12 +17,13 @@ void _InfoWin_create_win(InfoWin* self) {
 	wrefresh(self->m_win);		/* Show that box 		*/
 	set_window_colors_scheme(self->m_win, COLORSCHEME_BLACK);
 }
-void InfoWin_destroy(InfoWin* self) {
-    destroy_gui_win(self->m_win);
-    free(self);
+void InfoWin_destroy(InfoWin** self) {
+    destroy_gui_win((*self)->m_win);
+    free(*self);
+    *self = NULL;
 }
 
-void InfoWin_draw(InfoWin* self, GameState* h_game_state) {
+void InfoWin_draw(InfoWin* self) {
 
     wmove(self->m_win, 1, 1);
     wprintw(self->m_win,"HOW TO PLAY:");

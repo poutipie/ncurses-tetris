@@ -43,14 +43,16 @@ bool TetrisGrid_x_within_bounds(TetrisGrid* self, int x) {
 	return ! ( x < 0 || x > self->total_columns - 1);
 }
 
-void TetrisGrid_destroy(TetrisGrid* self) {
+void TetrisGrid_destroy(TetrisGrid** self) {
 
-    for (int i = 0; i < self->total_rows; ++i) {
-        free(self->filled_square_colors[i]);
-        free(self->filled_squares[i]);
+    for (int i = 0; i < (*self)->total_rows; ++i) {
+        free((*self)->filled_square_colors[i]);
+        free((*self)->filled_squares[i]);
     }
-    free(self->filled_square_colors);
-    free(self->filled_squares);
+    free((*self)->filled_square_colors);
+    free((*self)->filled_squares);
+    free(*self);
+    *self = NULL;
 }
 
 bool TetrisGrid_square_filled(TetrisGrid* self, Point position) {

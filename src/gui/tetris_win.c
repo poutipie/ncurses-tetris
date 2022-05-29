@@ -21,10 +21,11 @@ void _TetrisWin_create_win(TetrisWin* self) {
 	set_window_colors_scheme(self->m_win, COLORSCHEME_WHITE);
 }
 
-void TetrisWin_destroy(TetrisWin* self) {
+void TetrisWin_destroy(TetrisWin** self) {
 
-    destroy_gui_win(self->m_win);
-    free(self);
+    destroy_gui_win((*self)->m_win);
+    free(*self);
+    *self = NULL;
 }
 
 void TetrisWin_draw(TetrisWin* self, GameState* h_game_state) {

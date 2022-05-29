@@ -10,6 +10,7 @@
 #include "score_win.h"
 #include "title_win.h"
 #include "info_win.h"
+#include "preview_win.h"
 
 int main(int argc, char *argv[])
 {	
@@ -19,6 +20,7 @@ int main(int argc, char *argv[])
 	ScoreWin* score_win;
 	TitleWin* title_win;
 	InfoWin* info_win;
+	PreviewWin* preview_win;
 
 	initscr();			/* Start curses mode 		*/
 	
@@ -42,6 +44,7 @@ int main(int argc, char *argv[])
 	ScoreWin_init(&score_win);
 	TitleWin_init(&title_win);
 	InfoWin_init(&info_win);
+	PreviewWin_init(&preview_win);
 	GameLoop_init(&game_loop);
 
 	// Animation loop
@@ -49,14 +52,16 @@ int main(int argc, char *argv[])
 		GameLoop_game_loop(game_loop);
 		TetrisWin_draw(tetris_win, game_loop->game_state);
 		ScoreWin_draw(score_win, game_loop->game_state);
-		TitleWin_draw(title_win, game_loop->game_state);
-		InfoWin_draw(info_win, game_loop->game_state);
+		PreviewWin_draw(preview_win, game_loop->game_state);
+		TitleWin_draw(title_win);
+		InfoWin_draw(info_win);
 	}
-	TetrisWin_destroy(tetris_win);
-	ScoreWin_destroy(score_win);
-	TitleWin_destroy(title_win);
-	InfoWin_destroy(info_win);
-	GameLoop_destroy(game_loop);
+	TetrisWin_destroy(&tetris_win);
+	ScoreWin_destroy(&score_win);
+	TitleWin_destroy(&title_win);
+	InfoWin_destroy(&info_win);
+	PreviewWin_destroy(&preview_win);
+	GameLoop_destroy(&game_loop);
 	endwin();			/* End curses mode		  */
 	return 0;
 }

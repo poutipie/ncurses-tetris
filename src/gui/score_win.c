@@ -20,10 +20,11 @@ void _ScoreWin_create_win(ScoreWin* self) {
 
 }
 
-void ScoreWin_destroy(ScoreWin* self) {
+void ScoreWin_destroy(ScoreWin** self) {
 
-    destroy_gui_win(self->m_win);
-    free(self);
+    destroy_gui_win((*self)->m_win);
+    free(*self);
+    *self = NULL;
 }
 
 void ScoreWin_draw(ScoreWin* self, GameState* h_game_state) {

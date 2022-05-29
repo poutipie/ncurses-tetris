@@ -77,9 +77,10 @@ void TetrisBlock_init_S(TetrisBlock* self) {
     self->m_blk_coords[3].y = 1;
 }
 
-void TetrisBlock_destroy(TetrisBlock* self) {
-    free(self->m_blk_coords);
-    free(self);
+void TetrisBlock_destroy(TetrisBlock** self) {
+    free((*self)->m_blk_coords);
+    free(*self);
+    *self = NULL;
 }
 
 void TetrisBlock_move(TetrisBlock* self, TetrisGrid* h_grid,

@@ -8,30 +8,45 @@ void GameLoop_init(GameLoop** self) {
     *self = (GameLoop*)malloc(sizeof(GameLoop));
 
     (*self)->exiting = false;
+    (*self)->active_block = NULL;
+    (*self)->next_block = NULL;
 
     TetrisGrid_init(&(*self)->tetris_grid, TETRIS_ROWS, TETRIS_COLUMNS);
-    GameLoop_start_new_block(*self);
-    GameState_init(&(*self)->game_state, (*self)->tetris_grid, (*self)->active_block);
+    GameState_init(&(*self)->game_state, (*self)->tetris_grid, 
+        (*self)->active_block, (*self)->next_block);
+    GameLoop_take_next_block(*self);
 
 }
 
-void GameLoop_destroy(GameLoop* self) {
+void GameLoop_destroy(GameLoop** self) {
 
-    TetrisBlock_destroy(self->active_block);
-    TetrisGrid_destroy(self->tetris_grid);
-    GameState_destroy(self->game_state);
-    free(self);
+    if ((*self)->active_block != NULL) {
+        TetrisBlock_destroy(&(*self)->active_block);
+    }
+    if ((*self)->next_block != NULL) {
+        TetrisBlock_destroy(&(*self)->next_block);
+    }
+
+    TetrisGrid_destroy(&(*self)->tetris_grid);
+    GameState_destroy(&(*self)->game_state);
+    free(*self);
+    *self = NULL;
 }
 
 void GameLoop_reset(GameLoop* self) {
 
-    TetrisBlock_destroy(self->active_block);
-    TetrisGrid_destroy(self->tetris_grid);
-    GameState_destroy(self->game_state);
+    if (self->active_block != NULL) {
+        TetrisBlock_destroy(&self->active_block);
+    }
+    if (self->tetris_grid != NULL) {
+        TetrisGrid_destroy(&self->tetris_grid);
+    }
+    GameState_destroy(&self->game_state);
 
     TetrisGrid_init(&self->tetris_grid, TETRIS_ROWS, TETRIS_COLUMNS);
-    GameLoop_start_new_block(self);
-    GameState_init(&self->game_state, self->tetris_grid, self->active_block);
+    GameState_init(&self->game_state, self->tetris_grid, 
+        self->active_block, self->next_block);
+    GameLoop_take_next_block(self);
 }
 
 void GameLoop_game_loop(GameLoop* self) {
@@ -70,8 +85,7 @@ void GameLoop_game_loop(GameLoop* self) {
     }
 		
     if (!TetrisBlock_fall(self->active_block, self->tetris_grid)) {
-        TetrisBlock_destroy(self->active_block);
-        GameLoop_start_new_block(self);
+        GameLoop_take_next_block(self);
     }
     
     int filled_row = TetrisGrid_find_filled_row(self->tetris_grid);
@@ -82,13 +96,35 @@ void GameLoop_game_loop(GameLoop* self) {
     }
 }
 
-void GameLoop_start_new_block(GameLoop* self) {
+void GameLoop_create_next_block(GameLoop* self) {
+
+    if (self->next_block != NULL) {
+        TetrisBlock_destroy(&self->next_block);
+    }
 
     TetrisBlockType new_block_type = rand() % 2;
-    TetrisBlock_init(&self->active_block, new_block_type, TETRIS_COLUMNS/2, 0);
+    TetrisBlock_init(&self->next_block, new_block_type, TETRIS_COLUMNS/2, 0);
+
+}
+
+void GameLoop_take_next_block(GameLoop* self) {
+
+    if (self->next_block == NULL) {
+        GameLoop_create_next_block(self);
+    }
+    if (self->active_block != NULL) {
+        TetrisBlock_destroy(&self->active_block);
+    }
+
+    self->active_block = self->next_block;
+    self->next_block = NULL;
 
     if (TetrisBlock_is_on_filled_point(self->active_block, self->tetris_grid)) {
         self->game_state->game_over = true;
     }
 
+    GameLoop_create_next_block(self);
+
+    self->game_state->h_tetris_block = self->active_block;
+    self->game_state->h_next_tetris_block = self->next_block;
 }

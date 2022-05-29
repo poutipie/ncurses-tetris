@@ -9,8 +9,8 @@ typedef struct sTetrisWin {
 } TetrisWin;
 
 void TetrisWin_init(TetrisWin** self);
+void TetrisWin_destroy(TetrisWin** self);
 void _TetrisWin_create_win(TetrisWin* self);
-void TetrisWin_destroy(TetrisWin* self);
 
 void TetrisWin_draw(TetrisWin* self, GameState* h_game_state);
 void TetrisWin_draw_game_over(TetrisWin* self);

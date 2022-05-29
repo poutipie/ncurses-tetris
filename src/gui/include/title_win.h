@@ -13,9 +13,9 @@ typedef struct sTitleWin {
 } TitleWin;
 
 void TitleWin_init(TitleWin** self);
+void TitleWin_destroy(TitleWin** self);
 void _TitleWin_create_win(TitleWin* self);
-void TitleWin_destroy(TitleWin* self);
 
-void TitleWin_draw(TitleWin* self, GameState* h_game_state);
+void TitleWin_draw(TitleWin* self);
 
 #endif /* TITLE_WIN_H */
