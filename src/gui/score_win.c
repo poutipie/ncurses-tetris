@@ -9,8 +9,6 @@ void ScoreWin_init(ScoreWin** self) {
 
 void _ScoreWin_create_win(ScoreWin* self) {
 
-    WINDOW* local_win;
-
 	int height = 5;
 	int width = 10;
 
