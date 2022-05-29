@@ -47,7 +47,7 @@ void _TetrisBlock_rotate_operation(TetrisBlock* self, bool clockwise);
 void TetrisBlock_freeze(TetrisBlock* self, TetrisGrid* h_grid);
 
 bool TetrisBlock_cannot_fall(TetrisBlock* self, TetrisGrid* h_grid);
-bool TetrisBlock_out_of_bounds(TetrisBlock* self);
+bool TetrisBlock_out_of_bounds(TetrisBlock* self, TetrisGrid* h_grid);
 bool TetrisBlock_is_on_filled_point(TetrisBlock* self, TetrisGrid* h_grid);
 
 #endif /* TETRIS_BLOCK_H */

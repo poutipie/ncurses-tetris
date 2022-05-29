@@ -12,14 +12,6 @@ void set_window_colors_scheme(WINDOW* h_win, ColorScheme color_scheme) {
 	wbkgd(h_win, COLOR_PAIR(color));
 }
 
-size_t tetris_row_count(WINDOW* h_win) {
-	return getmaxy(h_win) - 2;
-}
-
-size_t tetris_column_count(WINDOW* h_win) {
-	return getmaxx(h_win) - 2;
-}
-
 void draw_tetris_square(WINDOW* h_win, Point position, ColorScheme color) {
 	wattron(h_win, COLOR_PAIR(color));
     wmove(h_win, position.y + 1, position.x + 1);
@@ -29,14 +21,6 @@ void draw_tetris_square(WINDOW* h_win, Point position, ColorScheme color) {
 void clear_tetris_square(WINDOW* h_win, Point position) {
 	wmove(h_win, position.y + 1, position.x + 1);
     wprintw(h_win, " ");
-}
-
-bool y_within_bounds(int y) {
-	return  ! (y < 0 || y > TETRIS_ROWS - 1);
-}
-
-bool x_within_bounds(int x) {
-	return ! ( x < 0 || x > TETRIS_COLUMNS - 1);
 }
 
 WINDOW* create_score_win() {

@@ -34,6 +34,15 @@ void TetrisGrid_init(TetrisGrid** self, size_t rows, size_t cols) {
         }
     }
 }
+
+bool TetrisGrid_y_within_bounds(TetrisGrid* self, int y) {
+	return  ! (y < 0 || y > self->total_rows - 1);
+}
+
+bool TetrisGrid_x_within_bounds(TetrisGrid* self, int x) {
+	return ! ( x < 0 || x > self->total_columns - 1);
+}
+
 void TetrisGrid_destroy(TetrisGrid* self) {
 
     for (int i = 0; i < self->total_rows; ++i) {

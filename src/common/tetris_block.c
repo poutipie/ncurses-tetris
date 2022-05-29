@@ -82,7 +82,7 @@ void TetrisBlock_destroy(TetrisBlock* self) {
     free(self);
 }
 
-void TetrisBlock_move(TetrisBlock* self, TetrisGrid* h_state,
+void TetrisBlock_move(TetrisBlock* self, TetrisGrid* h_grid,
     int x, int y)
 {
     if (self->m_frozen) {
@@ -96,9 +96,9 @@ void TetrisBlock_move(TetrisBlock* self, TetrisGrid* h_state,
             .y = self->m_blk_coords[i].y + y + self->m_world_pos_y
         };
 
-        movement_allowed &= x_within_bounds(new_position.x);
-        movement_allowed &= y_within_bounds(new_position.y);
-        movement_allowed &= !TetrisGrid_square_filled(h_state, new_position);
+        movement_allowed &= TetrisGrid_x_within_bounds(h_grid, new_position.x);
+        movement_allowed &= TetrisGrid_y_within_bounds(h_grid, new_position.y);
+        movement_allowed &= !TetrisGrid_square_filled(h_grid, new_position);
     }
     if (movement_allowed == false) {
         return;
@@ -117,7 +117,7 @@ bool TetrisBlock_fall(TetrisBlock* self, TetrisGrid* h_state) {
     return true;
 }
 
-void TetrisBlock_rotate(TetrisBlock* self, TetrisGrid* h_state)
+void TetrisBlock_rotate(TetrisBlock* self, TetrisGrid* h_grid)
 {
     if (self->m_frozen) {
         return;
@@ -141,8 +141,8 @@ void TetrisBlock_rotate(TetrisBlock* self, TetrisGrid* h_state)
     _TetrisBlock_rotate_operation(self, rotate_clockwise);
     /* Revert back to original rotation if block does not stay in bounds. */
     if (
-        TetrisBlock_out_of_bounds(self) ||
-        TetrisBlock_is_on_filled_point(self, h_state)
+        TetrisBlock_out_of_bounds(self, h_grid) ||
+        TetrisBlock_is_on_filled_point(self, h_grid)
     ) {
         _TetrisBlock_rotate_operation(self, !rotate_clockwise);
     }
@@ -179,7 +179,7 @@ void TetrisBlock_freeze(TetrisBlock* self, TetrisGrid* h_state) {
     }
 }
 
-bool TetrisBlock_cannot_fall(TetrisBlock* self, TetrisGrid* h_state) {
+bool TetrisBlock_cannot_fall(TetrisBlock* self, TetrisGrid* h_grid) {
     
     for(int i = 0; i < self->m_blk_size; ++i) {
 
@@ -189,8 +189,8 @@ bool TetrisBlock_cannot_fall(TetrisBlock* self, TetrisGrid* h_state) {
         };
 
         if (
-            !y_within_bounds(new_position.y) ||
-            TetrisGrid_square_filled(h_state, new_position)) {
+            !TetrisGrid_y_within_bounds(h_grid, new_position.y) ||
+            TetrisGrid_square_filled(h_grid, new_position)) {
             return true;
         }
     }
@@ -198,22 +198,22 @@ bool TetrisBlock_cannot_fall(TetrisBlock* self, TetrisGrid* h_state) {
     return false;
 }
 
-bool TetrisBlock_out_of_bounds(TetrisBlock* self) {
+bool TetrisBlock_out_of_bounds(TetrisBlock* self, TetrisGrid* h_grid) {
 
     bool within_bounds = true;
     for (int i = 0; i < self->m_blk_size; ++i) {
-        within_bounds &= x_within_bounds(
-            self->m_blk_coords[i].x + self->m_world_pos_x
+        within_bounds &= TetrisGrid_x_within_bounds(
+            h_grid, self->m_blk_coords[i].x + self->m_world_pos_x
         );
-        within_bounds &= y_within_bounds(
-            self->m_blk_coords[i].y + self->m_world_pos_y
+        within_bounds &= TetrisGrid_y_within_bounds(
+            h_grid, self->m_blk_coords[i].y + self->m_world_pos_y
         );
     }
     return !within_bounds;
 
 }
 
-bool TetrisBlock_is_on_filled_point(TetrisBlock* self, TetrisGrid* h_state) {
+bool TetrisBlock_is_on_filled_point(TetrisBlock* self, TetrisGrid* h_grid) {
 
     bool on_filled_point = false;
 
@@ -224,7 +224,7 @@ bool TetrisBlock_is_on_filled_point(TetrisBlock* self, TetrisGrid* h_state) {
             .y = self->m_blk_coords[i].y + self->m_world_pos_y
         };
 
-        on_filled_point |= TetrisGrid_square_filled(h_state, new_position);
+        on_filled_point |= TetrisGrid_square_filled(h_grid, new_position);
         if (on_filled_point) {
             break;
         }
