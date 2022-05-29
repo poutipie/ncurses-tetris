@@ -12,7 +12,7 @@ void _ScoreWin_create_win(ScoreWin* self) {
     WINDOW* local_win;
 
 	int height = 5;
-	int width = 5;
+	int width = 10;
 
 	int starty = ((LINES - (TETRIS_ROWS + 2)) / 2);
 	int startx = ((COLS - (TETRIS_COLUMNS + 2)) / 2) + TETRIS_COLUMNS + 2 + 4;
@@ -30,6 +30,13 @@ void ScoreWin_destroy(ScoreWin* self) {
     free(self);
 }
 
-void ScoreWin_draw(ScoreWin* self) {
+void ScoreWin_draw(ScoreWin* self, GameState* h_game_state) {
+
+    wclear(self->m_win);
+    box(self->m_win, 0 , 0);
+    wmove(self->m_win, 1, 1);
+    wprintw(self->m_win, "Score:");
+    wmove(self->m_win, 2, 1);
+    wprintw(self->m_win, "%d", h_game_state->score);
     wrefresh(self->m_win);
 }

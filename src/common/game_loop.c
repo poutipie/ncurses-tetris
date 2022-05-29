@@ -44,9 +44,8 @@ void GameLoop_game_loop(GameLoop* self) {
     
     int filled_row = TetrisGrid_find_filled_row(self->tetris_grid);
     while (filled_row != -1) {
-        move(0,0);
-        printw("ROW WAS FILLED!");
         TetrisGrid_clear_row(self->tetris_grid, filled_row);
         filled_row = TetrisGrid_find_filled_row(self->tetris_grid);
+        self->game_state->score += 50;
     }
 }

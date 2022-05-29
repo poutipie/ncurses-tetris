@@ -45,7 +45,7 @@ int main(int argc, char *argv[])
 	while(true) {
 		GameLoop_game_loop(game_loop);
 		TetrisWin_draw(h_tetris_win, game_loop->game_state);
-		ScoreWin_draw(h_score_win);
+		ScoreWin_draw(h_score_win, game_loop->game_state);
 	}
 	TetrisWin_destroy(h_tetris_win);
 	ScoreWin_destroy(h_score_win);
