@@ -1,8 +1,7 @@
 #ifndef TETRIS_WIN_H
 #define TETRIS_WIN_H
 
-#include "utils.h"
-
+#include "ncurses_api.h"
 #include "game_state.h"
 
 typedef struct sTetrisWin {

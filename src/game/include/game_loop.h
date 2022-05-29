@@ -2,7 +2,7 @@
 #ifndef GAME_LOOP_H
 #define GAME_LOOP_H
 
-#include "utils.h"
+#include "types.h"
 #include "game_state.h"
 #include "tetris_block.h"
 #include "tetris_grid.h"

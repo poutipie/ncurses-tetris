@@ -1,7 +1,7 @@
 #ifndef GAMESTATE_H
 #define GAMESTATE_H
 
-#include "utils.h"
+#include "types.h"
 #include "tetris_grid.h"
 #include "tetris_block.h"
 

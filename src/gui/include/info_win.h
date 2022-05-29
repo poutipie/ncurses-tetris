@@ -2,7 +2,7 @@
 #ifndef INFO_WIN_H
 #define INFO_WIN_H
 
-#include "utils.h"
+#include "ncurses_api.h"
 #include "game_state.h"
 
 typedef struct sInfoWin {

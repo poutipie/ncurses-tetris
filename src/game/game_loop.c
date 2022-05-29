@@ -1,6 +1,7 @@
 #include "game_loop.h"
 
 #include <stdlib.h>
+#include "ncurses_api.h"
 
 void GameLoop_init(GameLoop** self) {
 

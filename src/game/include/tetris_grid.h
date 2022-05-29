@@ -1,7 +1,7 @@
 #ifndef TETRIS_GRID_H
 #define TETRIS_GRID_H
 
-#include "utils.h"
+#include "types.h"
 
 typedef struct sTetrisGrid {
 

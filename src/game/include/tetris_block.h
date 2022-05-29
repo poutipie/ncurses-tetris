@@ -1,9 +1,8 @@
 #ifndef TETRIS_BLOCK_H
 #define TETRIS_BLOCK_H
 
-#include <ncurses.h>
 #include "tetris_grid.h"
-#include "utils.h"
+#include "types.h"
 
 typedef enum eTetrisBlockType {
 	TETRISBLOCKTYPE_SQUARE = 0,

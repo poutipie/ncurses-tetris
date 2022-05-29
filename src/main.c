@@ -2,6 +2,7 @@
 #include <ncurses.h>
 #include <unistd.h>
 
+#include "types.h"
 #include "tetris_block.h"
 #include "game_state.h"
 #include "game_loop.h"
@@ -9,10 +10,6 @@
 #include "score_win.h"
 #include "title_win.h"
 #include "info_win.h"
-#include "utils.h"
-
-WINDOW *create_newwin(int height, int width, int starty, int startx);
-void destroy_win(WINDOW *local_win);
 
 int main(int argc, char *argv[])
 {	

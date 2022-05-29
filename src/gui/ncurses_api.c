@@ -1,4 +1,4 @@
-#include "utils.h"
+#include "ncurses_api.h"
 
 void ncurses_initialize_color_schemes() {
 	init_pair(COLORSCHEME_BLACK, COLOR_WHITE, COLOR_BLACK);
