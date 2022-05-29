@@ -78,12 +78,10 @@ void TetrisWin_draw(TetrisWin* self, GameState* h_game_state) {
 
 void TetrisWin_draw_game_over(TetrisWin* self) {
 
-    char text[] = "GAME OVER";
-    size_t text_len = sizeof(text) -1;
+    size_t text_len = 9;
 
     wmove(self->m_win, (TETRIS_ROWS + 2) / 2, (TETRIS_COLUMNS + 2- text_len) / 2);
-    wprintw(self->m_win, "%s", text);
-
+    wprintw(self->m_win, "GAME OVER");
 }
 
 void _TetrisWin_draw_tetris_square(TetrisWin* self, Point position, ColorScheme color) {
